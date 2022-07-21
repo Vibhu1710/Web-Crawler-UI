@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Crawler UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="../static/index.css">
+</head>
+
+<body>
+    <div class="page">
+        <h1>Web Crawler Interface</h1>
+        <div class="float-panel">
+            <button id="run-btn">RUN SCRIPTS</button>
+        </div>
+        <div id="scroll-content">
+
+            {% for websiteCategory in renderMap %}
+                <div class="table-element">
+                    <h3>{{websiteCategory}}</h3>
+                    <table>
+                        <tr>
+                            <td><input class="table-tick" type="checkbox"></td>
+                            <th>Website</th>
+                            <th>Last Run</th>
+                            <th>Row Count</th>
+                            <th>Increment</th>
+                        </tr>
+                        {% for row in renderMap[websiteCategory] %}
+                            {% if row['Condition'] == -1 %}
+                                <tr id={{row['WebsiteId']}} style="color:red; background:#ffe3e3;">
+                            {% else %}
+                                <tr id={{row['WebsiteId']}}>
+                            {% endif %}
+                                <td>
+                                    {% if row['Condition'] == -1 %}
+                                        <input class="row-tick" type="checkbox" checked disabled>
+                                    {% else %}
+                                        <input class="row-tick" type="checkbox">
+                                    {% endif %}
+                                </td>
+                                <td>{{row['WebsiteName']}}</td>
+
+                                {% if row['Condition'] == -1 %}
+                                    <td>Error</td>
+                                {% else %}
+                                    <td>{{row['LastRun']}}</td>
+                                {% endif %}
+
+                                {% if row['Condition'] == -1 %}
+                                    <td>
+                                        {{row['State']}}
+                                        {% if row['City']!='-' %}
+                                            , {{row['City']}}
+                                        {% endif %}
+                                        {% if row['Pin']!='-' %}
+                                            , {{row['Pin']}}
+                                        {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td>{{row['RowCount']}}</td>
+                                {% endif %}
+                                {% if row['Condition'] == -1 %}
+                                    <td>
+                                        <input type="text" class="skip-input" name="skip" value="0">
+                                        <div class="text-link">
+                                            <a class="continue-text-link" href="#">Continue</a> /
+                                            <a class="stop-text-link" href="#">Stop</a>
+                                        </div>
+                                    </td>
+                                {% else %}
+                                    <td>{{row['Increment']}}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="../static/app.js"></script>
+    <!-- <script src="{{url_for('static',filename='app.js') }}"></script> -->
+</body>
+
+</html>
