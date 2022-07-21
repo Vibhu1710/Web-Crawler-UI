@@ -2,7 +2,7 @@ import mysql.connector
 # import pandas as pd
 
 # rds database connector
-rdsDb = mysql.connector.connect(host="ace-edr-instance-1.c3pibyraeohf.ap-south-1.rds.amazonaws.com", user="admin", passwd="", database="Data-repository", use_unicode=True, charset='utf8', use_pure=True)
+rdsDb = mysql.connector.connect(host="", user="", passwd="", database="", use_unicode=True, charset='utf8', use_pure=True)
 
 mycursor = rdsDb.cursor()
 
